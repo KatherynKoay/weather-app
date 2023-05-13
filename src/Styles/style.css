@@ -1,0 +1,57 @@
+.page-wrapper {
+  margin: 0;
+  padding: 0;
+  background: url(../Images/bg-light.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.page-container {
+  border: 0px solid red;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+}
+
+.search-box {
+  display: flex; /*align input and button side by side*/
+  border: 0px solid cyan;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.search-box input[type="text"] {
+  width: 85%;
+  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  color: #000000;
+  outline: none;
+}
+
+.search-box button {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.btn-round {
+  display: inline-block;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+}
+
+.btn-square {
+  display: inline-block;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+}
