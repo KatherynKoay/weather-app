@@ -22,6 +22,16 @@ function App() {
     setLocation("");
   };
 
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth();
+  let date = today.getDate();
+  let current_date = `${date}-${month}-${year}`;
+  let hours = today.getHours();
+  let minutes = today.getMinutes();
+  let seconds = today.getSeconds();
+  let current_time = `${hours}:${minutes}:${seconds}`;
+
   return (
     <div className="page-wrapper">
       <div className="page-container">
@@ -57,16 +67,16 @@ function App() {
               />
               <Text
                 variant={txt_h1}
-                text={Math.round(data.main.temp) + "°"}
+                text={Math.round(data?.main?.temp) + "°"}
                 style={{ color: theme["lightTheme-primary-color"] }}
               />
               <Text
                 variant={txt_h5}
                 text={
                   "H: " +
-                  Math.round(data.main.temp_max) +
+                  Math.round(data?.main?.temp_max) +
                   "° L: " +
-                  Math.round(data.main.temp_min) +
+                  Math.round(data?.main?.temp_min) +
                   "°"
                 }
                 style={{
@@ -76,7 +86,7 @@ function App() {
               />
               <Text
                 variant={txt_h5}
-                text={data.name + ", " + data.sys.country}
+                text={data?.name + ", " + data?.sys?.country}
                 style={{
                   color: theme["lightTheme-gray-color"],
                   fontWeight: 700,
@@ -86,21 +96,21 @@ function App() {
             <div className="weather-top-sectionRight">
               <Text
                 variant={txt_h5}
-                text={data.weather[0].main}
+                text={data?.weather?.[0]?.main}
                 style={{
                   color: theme["lightTheme-gray-color"],
                 }}
               />
               <Text
                 variant={txt_h5}
-                text={"Humidity: " + data.main.humidity + "%"}
+                text={"Humidity: " + data?.main?.humidity + "%"}
                 style={{
                   color: theme["lightTheme-gray-color"],
                 }}
               />
               <Text
                 variant={txt_h5}
-                text="01-09-2022 09:41am"
+                text={current_date + " " + current_time}
                 style={{
                   color: theme["lightTheme-gray-color"],
                 }}
