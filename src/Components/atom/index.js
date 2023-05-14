@@ -1,7 +1,6 @@
-import Button from './Button';
+import Button from "./Button";
+import Text from "./Text";
 
-import '../../Styles/style.css';
+import "../../Styles/style.css";
 
-export {
-    Button,
-};
+export { Button, Text };
