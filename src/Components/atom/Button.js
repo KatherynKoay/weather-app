@@ -38,6 +38,7 @@ const Button = React.forwardRef((props, ref) => {
       id={props.id}
       type={props.type}
       onClick={props.onClick}
+      onDelete={props.onDelete}
       disabled={props.disabled}
       style={props.style}
     >

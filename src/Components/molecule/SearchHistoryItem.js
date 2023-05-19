@@ -41,6 +41,7 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
             style={{
               background: "white",
             }}
+            onClick={props.onRevisit}
           />
         </div>
         <div className="searchHistoryItem-right-button">
@@ -54,6 +55,7 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
             style={{
               background: "white",
             }}
+            onClick={props.onDelete}
           />
         </div>
       </div>

@@ -12,11 +12,32 @@ function App() {
   const [data, setData] = useState({});
   const [city, setCity] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  //const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([]);
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=1fb2bc21dd9aaabaf07e1c4d4ad0901d`;
 
-  const searchCity = () => {
+  // Current Time
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth();
+  let date = today.getDate();
+  const currentDate = `${date}/${month}/${year}`;
+  // Current Date
+  function formatTimeAMPM(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    let strTime = hours + ":" + minutes + " " + ampm;
+    return strTime;
+  }
+  const currentTime = formatTimeAMPM(new Date()); // Get the current time when searching
+
+  const timestampOnSearch = currentDate + " " + currentTime; //DateTime when searching
+
+  const handleSearchClick = () => {
     //only executes when the searchbox is not empty
     if (city !== "") {
       axios
@@ -24,6 +45,10 @@ function App() {
         .then((response) => {
           setData(response.data);
           setErrorMsg("");
+          setHistory((prevHistory) => [
+            ...prevHistory,
+            { city, data: response.data, timestampOnSearch },
+          ]);
         })
         //add error message when search not found
         .catch((error) => {
@@ -34,28 +59,23 @@ function App() {
     }
   };
 
-  // Current Time
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth();
-  let date = today.getDate();
-  let current_date = `${date}/${month}/${year}`;
-  // Current Date
-  function formatTimeAMPM(date) {
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    var strTime = hours + ":" + minutes + " " + ampm;
-    return strTime;
-  }
+  const handleHistoryClick = (city) => {
+    handleSearchClick(city);
+  };
 
-  // const historyItems = historyData.map((item, index) => {
-  //   return;
-  //   <SearchHistoryItem location="Johor, MY" timestamp="01-09-2022 09:41am" />;
-  // });
+  const handleDeleteHistory = (city) => {
+    setHistory((prevHistory) => prevHistory.filter((item) => item !== city));
+  };
+
+  const historyItems = history.map((item, index) => (
+    <SearchHistoryItem
+      key={index}
+      location={item.data?.name + ", " + item.data?.sys?.country}
+      timestamp={item.timestampOnSearch} // Use item.timestampOnSearch here
+      onRevisit={() => handleHistoryClick(item.city)}
+      onDelete={() => handleDeleteHistory(item.city)}
+    />
+  ));
 
   return (
     <div className="page-wrapper">
@@ -76,7 +96,7 @@ function App() {
             style={{
               background: theme["lightTheme-primary-color"],
             }}
-            onClick={() => searchCity(city)}
+            onClick={() => handleSearchClick(city)}
           />
         </div>
 
@@ -141,7 +161,7 @@ function App() {
               />
               <Text
                 variant={txt_h5}
-                text={current_date + " " + formatTimeAMPM(new Date())}
+                text={timestampOnSearch}
                 style={{
                   color: theme["lightTheme-gray-color"],
                 }}
@@ -161,16 +181,7 @@ function App() {
                 }}
               />
             </div>
-            <div className="searchHistoryItem-container">
-              <SearchHistoryItem
-                location="Johor, MY"
-                timestamp="01-09-2022 09:41am"
-              />
-              <SearchHistoryItem
-                location="Johor, MY"
-                timestamp="01-09-2022 09:41am"
-              />
-            </div>
+            <div className="searchHistoryItem-container">{historyItems}</div>
           </div>
         </div>
       </div>
