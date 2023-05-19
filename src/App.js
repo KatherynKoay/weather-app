@@ -10,37 +10,55 @@ import axios from "axios";
 
 function App() {
   const [data, setData] = useState({});
-  const [location, setLocation] = useState("");
+  const [city, setCity] = useState("");
+  const [history, setHistory] = useState([]);
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=1fb2bc21dd9aaabaf07e1c4d4ad0901d`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=1fb2bc21dd9aaabaf07e1c4d4ad0901d`;
 
-  const searchLocation = () => {
-    axios.get(url).then((response) => {
-      setData(response.data);
-      console.log(response.data);
-    });
-    setLocation("");
+  const searchCity = () => {
+    //only executes when the searchbox is not empty
+    if (city !== "") {
+      axios.get(url).then((response) => {
+        setData(response.data);
+        console.log(response.data);
+      });
+      setCity("");
+    }
   };
 
+  // Current Time
   let today = new Date();
   let year = today.getFullYear();
   let month = today.getMonth();
   let date = today.getDate();
-  let current_date = `${date}-${month}-${year}`;
-  let hours = today.getHours();
-  let minutes = today.getMinutes();
-  let seconds = today.getSeconds();
-  let current_time = `${hours}:${minutes}:${seconds}`;
+  let current_date = `${date}/${month}/${year}`;
+  // Current Date
+  function formatTimeAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + " " + ampm;
+    return strTime;
+  }
+
+  // const historyItems = historyData.map((item, index) => {
+  //   return;
+  //   <SearchHistoryItem location="Johor, MY" timestamp="01-09-2022 09:41am" />;
+  // });
 
   return (
     <div className="page-wrapper">
       <div className="page-container">
+        {/* SearchBox */}
         <div className="search-box">
           <input
             type="text"
             placeholder="Country"
-            value={location}
-            onChange={(event) => setLocation(event.target.value)}
+            value={city}
+            onChange={(event) => setCity(event.target.value)}
           />
           <Button
             variant={btn_square}
@@ -50,9 +68,11 @@ function App() {
             style={{
               background: theme["lightTheme-primary-color"],
             }}
-            onClick={() => searchLocation(location)}
+            onClick={() => searchCity(city)}
           />
         </div>
+
+        {/* WeatherContainer */}
         <div className="weather-container">
           <img className="imageSun" src={SunImg} alt="sun" />
           <div className="weather-top-section-TodayWeather">
@@ -110,13 +130,15 @@ function App() {
               />
               <Text
                 variant={txt_h5}
-                text={current_date + " " + current_time}
+                text={current_date + " " + formatTimeAMPM(new Date())}
                 style={{
                   color: theme["lightTheme-gray-color"],
                 }}
               />
             </div>
           </div>
+
+          {/* Search History */}
           <div className="weather-bottom-section-SearchHistory">
             <div className="searchHistory-title">
               <Text
@@ -129,22 +151,6 @@ function App() {
               />
             </div>
             <div className="searchHistoryItem-container">
-              <SearchHistoryItem
-                location="Johor, MY"
-                timestamp="01-09-2022 09:41am"
-              />
-              <SearchHistoryItem
-                location="Johor, MY"
-                timestamp="01-09-2022 09:41am"
-              />
-              <SearchHistoryItem
-                location="Johor, MY"
-                timestamp="01-09-2022 09:41am"
-              />
-              <SearchHistoryItem
-                location="Johor, MY"
-                timestamp="01-09-2022 09:41am"
-              />
               <SearchHistoryItem
                 location="Johor, MY"
                 timestamp="01-09-2022 09:41am"
