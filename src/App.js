@@ -11,17 +11,25 @@ import axios from "axios";
 function App() {
   const [data, setData] = useState({});
   const [city, setCity] = useState("");
-  const [history, setHistory] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
+  //const [history, setHistory] = useState([]);
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=1fb2bc21dd9aaabaf07e1c4d4ad0901d`;
 
   const searchCity = () => {
     //only executes when the searchbox is not empty
     if (city !== "") {
-      axios.get(url).then((response) => {
-        setData(response.data);
-        console.log(response.data);
-      });
+      axios
+        .get(url)
+        .then((response) => {
+          setData(response.data);
+          setErrorMsg("");
+        })
+        //add error message when search not found
+        .catch((error) => {
+          setData({});
+          setErrorMsg("City not found. Please try again.");
+        });
       setCity("");
     }
   };
@@ -56,7 +64,7 @@ function App() {
         <div className="search-box">
           <input
             type="text"
-            placeholder="Country"
+            placeholder="Please enter a city"
             value={city}
             onChange={(event) => setCity(event.target.value)}
           />
@@ -71,6 +79,9 @@ function App() {
             onClick={() => searchCity(city)}
           />
         </div>
+
+        {/* Error Message */}
+        {errorMsg && <span className="search-errorMsg">{errorMsg}</span>}
 
         {/* WeatherContainer */}
         <div className="weather-container">

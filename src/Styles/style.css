@@ -89,10 +89,20 @@ p {
   margin-left: 10px;
   cursor: pointer;
 }
-/* 
+
 .search-errorMsg {
-  color: red;
+  color: rgb(254, 50, 117);
+  font-weight: 500;
+  animation: blinker 1.5s linear infinite;
+  /* 1.5s duration of the animation, linear will make the animation progress at a constant speed, and on infinite loop*/
 }
+@keyframes blinker {
+  50% {
+    /* at the 50% mark of the animation named blinker, the errorMsg element will have an opacity of 0.5 */
+    opacity: 0.5; /* set opacity to 0.5 at 50% */
+  }
+}
+/* 
 .search-dropdown {
   background: rgba(255, 255, 255, 0.2);
   display: flex;
