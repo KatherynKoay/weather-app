@@ -4,7 +4,7 @@
   background: url(../Images/bg-light.png);
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100%;
+  height: 100vh; /*to ensure the bg takes the rest of the viewport height */
 }
 
 .page-container {
@@ -13,136 +13,6 @@
   margin-right: auto;
   height: auto;
   padding: 20px;
-}
-
-/* Search Box */
-.search-box {
-  display: flex; /*align input and button side by side*/
-  width: 100%;
-}
-.search-box input[type="text"] {
-  width: 100%;
-  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-  background: rgba(255, 255, 255, 0.2);
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  color: #000000;
-  outline: none;
-}
-.search-box button {
-  margin-left: 10px;
-  cursor: pointer;
-}
-/* 
-.search-errorMsg {
-  color: red;
-}
-.search-dropdown {
-  background: rgba(255, 255, 255, 0.2);
-  display: flex;
-  flex-direction: column;
-  border: none;
-  padding-left: 10px; when dropdown does appear, give it some padding on the left, which the wording starting line aligns with the searchbox input
-  width: initial;
-}
-.search-dropdown-row {
-  cursor: pointer;
-} */
-
-/* Button */
-.btn-round {
-  display: inline-block;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-}
-.btn-square {
-  display: inline-block;
-  border: none;
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-}
-
-.weather-container {
-  margin-top: 100px;
-  width: 100%;
-  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-  background: rgba(255, 255, 255, 0.2);
-  padding: 20px;
-  border: 1px solid white;
-  border-radius: 25px;
-  height: fit-content;
-  position: relative;
-}
-.imageSun {
-  position: absolute;
-  top: 0px;
-  right: 8px;
-  top: -80px;
-  width: 180px;
-  height: 180px;
-}
-.weather-top-section-TodayWeather {
-  display: flex; /*align input and button side by side*/
-  width: 100%;
-  position: relative;
-}
-.weather-top-sectionLeft {
-  width: 45%;
-}
-.weather-top-sectionRight {
-  width: 55%;
-  text-align: right;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-.weather-bottom-section-SearchHistory {
-  margin-top: 20px;
-  width: 100%;
-  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-  background: rgba(255, 255, 255, 0.3);
-  padding: 20px;
-  border: none;
-  border-radius: 25px;
-  height: fit-content;
-}
-.searchHistory-title {
-  border: 0px solid rgb(1, 255, 18);
-}
-.searchHistoryItem-container {
-  height: auto;
-  margin-top: 10px;
-}
-
-.searchHistoryItem {
-  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-  background: rgba(255, 255, 255, 0.4);
-  padding: 10px;
-  border: none;
-  border-radius: 25px;
-  height: 75px;
-  display: flex; /*align input and button side by side*/
-  width: 100%;
-  margin-bottom: 20px;
-}
-.searchHistoryItem-right {
-  width: 50%;
-}
-.searchHistoryItem-left {
-  width: 50%;
-  text-align: right;
-  line-height: 65px;
-}
-.searchHistoryItem-left-button {
-  padding-left: 10px;
-  display: inline-block;
-  justify-content: center;
 }
 
 /* Text */
@@ -182,6 +52,138 @@ p {
   color: #727171;
 }
 
+/* Button */
+.btn-round {
+  display: inline-block;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+}
+.btn-square {
+  display: inline-block;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+}
+
+/* Search Box */
+.search-box {
+  display: flex; /*align input and button side by side*/
+  width: 100%;
+}
+.search-box input[type="text"] {
+  width: 100%;
+  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  color: #000000;
+  outline: none;
+}
+.search-box button {
+  margin-left: 10px;
+  cursor: pointer;
+}
+/* 
+.search-errorMsg {
+  color: red;
+}
+.search-dropdown {
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding-left: 10px; when dropdown does appear, give it some padding on the left, which the wording starting line aligns with the searchbox input
+  width: initial;
+}
+.search-dropdown-row {
+  cursor: pointer;
+} */
+
+/* Today's Weather */
+.weather-container {
+  margin-top: 100px;
+  width: 100%;
+  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border: 1px solid white;
+  border-radius: 25px;
+  height: fit-content;
+  position: relative;
+}
+.imageSun {
+  position: absolute;
+  top: 0px;
+  right: 8px;
+  top: -80px;
+  width: 180px;
+  height: 180px;
+}
+.weather-top-section-TodayWeather {
+  display: flex; /*align input and button side by side*/
+  width: 100%;
+  position: relative;
+}
+.weather-top-sectionLeft {
+  width: 45%;
+}
+.weather-top-sectionRight {
+  width: 55%;
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/* Search History */
+.weather-bottom-section-SearchHistory {
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
+  background: rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  border: none;
+  border-radius: 25px;
+  height: fit-content;
+}
+.searchHistory-title {
+  border: 0px solid rgb(1, 255, 18);
+}
+.searchHistoryItem-container {
+  height: auto;
+  margin-top: 10px;
+}
+.searchHistoryItem {
+  box-sizing: border-box; /*include the padding and border in an element's total width and height*/
+  background: rgba(255, 255, 255, 0.4);
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  height: 75px;
+  display: flex; /*align input and button side by side*/
+  width: 100%;
+  margin-bottom: 20px;
+}
+.searchHistoryItem-left {
+  width: 50%;
+}
+.searchHistoryItem-right {
+  width: 50%;
+  text-align: right;
+  line-height: 65px;
+}
+.searchHistoryItem-right-button {
+  padding-left: 10px;
+  display: inline-block;
+  justify-content: center;
+}
+
 /*------------------------------------------------------------------------
 Responsive Media Quaries
 ------------------------------------------------------------------------*/
@@ -189,21 +191,180 @@ Responsive Media Quaries
 /* TV */
 @media only screen and (min-width: 1200px) {
   .page-container {
+    width: 80%;
+  }
+  .weather-top-sectionLeft {
+    width: 30%;
+  }
+  .weather-top-sectionRight {
     width: 70%;
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex; /*display flex in a row*/
+    justify-content: space-between; /*spacing evenly in the div*/
+  }
+  /* .weather-top-sectionRight h1,
+  .weather-top-sectionRight h2,
+  .weather-top-sectionRight h3,
+  .weather-top-sectionRight h4,
+  .weather-top-sectionRight h5,
+  .weather-top-sectionRight h6,
+  .weather-top-sectionRight p {
+    border: 0px solid rgb(255, 255, 0);
+  } */
+
+  .searchHistoryItem {
+    box-sizing: border-box; /*include the padding and border in an element's total width and height*/
+    background: rgba(255, 255, 255, 0.4);
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    height: 60px;
+    display: flex; /*align input and button side by side*/
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .searchHistoryItem-left {
+    width: 80%;
+    display: flex; /*display flex in a row*/
+    justify-content: space-between; /*spacing evenly in the div*/
+  }
+  .searchHistoryItem-left h1,
+  .searchHistoryItem-left h2,
+  .searchHistoryItem-left h3,
+  .searchHistoryItem-left h4,
+  .searchHistoryItem-left h5,
+  .searchHistoryItem-left h6,
+  .searchHistoryItem-left p {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .searchHistoryItem-right {
+    width: 20%;
+    text-align: right;
+    line-height: 10px; /* force the button position to be higher */
   }
 }
 
 /* DESKTOP */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .page-container {
+    width: 80%;
+  }
+  .weather-top-sectionLeft {
+    width: 30%;
+  }
+  .weather-top-sectionRight {
     width: 70%;
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex; /*display flex in a row*/
+    justify-content: space-between; /*spacing evenly in the div*/
+  }
+  /* .weather-top-sectionRight h1,
+  .weather-top-sectionRight h2,
+  .weather-top-sectionRight h3,
+  .weather-top-sectionRight h4,
+  .weather-top-sectionRight h5,
+  .weather-top-sectionRight h6,
+  .weather-top-sectionRight p {
+    border: 0px solid rgb(255, 255, 0);
+  } */
+
+  .searchHistoryItem {
+    box-sizing: border-box; /*include the padding and border in an element's total width and height*/
+    background: rgba(255, 255, 255, 0.4);
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    height: 60px;
+    display: flex; /*align input and button side by side*/
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .searchHistoryItem-left {
+    width: 80%;
+    display: flex; /*display flex in a row*/
+    justify-content: space-between; /*spacing evenly in the div*/
+  }
+  .searchHistoryItem-left h1,
+  .searchHistoryItem-left h2,
+  .searchHistoryItem-left h3,
+  .searchHistoryItem-left h4,
+  .searchHistoryItem-left h5,
+  .searchHistoryItem-left h6,
+  .searchHistoryItem-left p {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .searchHistoryItem-right {
+    width: 20%;
+    text-align: right;
+    line-height: 10px; /* force the button position to be higher */
   }
 }
 
 /* LARGE TABLET */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .page-container {
+    width: 80%;
+  }
+  .weather-top-sectionLeft {
+    width: 30%;
+  }
+  .weather-top-sectionRight {
     width: 70%;
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex; /*display flex in a row*/
+    justify-content: space-between; /*spacing evenly in the div*/
+  }
+  /* .weather-top-sectionRight h1,
+  .weather-top-sectionRight h2,
+  .weather-top-sectionRight h3,
+  .weather-top-sectionRight h4,
+  .weather-top-sectionRight h5,
+  .weather-top-sectionRight h6,
+  .weather-top-sectionRight p {
+    border: 0px solid rgb(255, 255, 0);
+  } */
+
+  .searchHistoryItem {
+    box-sizing: border-box; /*include the padding and border in an element's total width and height*/
+    background: rgba(255, 255, 255, 0.4);
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    height: 60px;
+    display: flex; /*align input and button side by side*/
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .searchHistoryItem-left {
+    width: 80%;
+    display: flex; /*display flex in a row*/
+    justify-content: space-between; /*spacing evenly in the div*/
+  }
+  .searchHistoryItem-left h1,
+  .searchHistoryItem-left h2,
+  .searchHistoryItem-left h3,
+  .searchHistoryItem-left h4,
+  .searchHistoryItem-left h5,
+  .searchHistoryItem-left h6,
+  .searchHistoryItem-left p {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .searchHistoryItem-right {
+    width: 20%;
+    text-align: right;
+    line-height: 10px; /* force the button position to be higher */
   }
 }
 

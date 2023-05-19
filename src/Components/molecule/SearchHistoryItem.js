@@ -8,7 +8,7 @@ import theme from "../../Styles/theme";
 const SearchHistoryItem = React.forwardRef((props, ref) => {
   return (
     <div className="searchHistoryItem">
-      <div className="searchHistoryItem-right">
+      <div className="searchHistoryItem-left">
         <Text
           variant={txt_h6}
           text={props.location}
@@ -26,8 +26,8 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
           }}
         />
       </div>
-      <div className="searchHistoryItem-left">
-        <div className="searchHistoryItem-left-button">
+      <div className="searchHistoryItem-right">
+        <div className="searchHistoryItem-right-button">
           <Button
             variant={btn_round}
             hasIcon
@@ -43,7 +43,7 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
             }}
           />
         </div>
-        <div className="searchHistoryItem-left-button">
+        <div className="searchHistoryItem-right-button">
           <Button
             variant={btn_round}
             hasIcon
