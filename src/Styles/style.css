@@ -1,5 +1,23 @@
+:root {
+  /* global define variables for easier maintenance */
+  --darkPurple-color: #28124d;
+  --lightPurple-color: #6c40b5;
+  --lightgray-color: #8c8c8c;
+  --white-color: #ffffff;
+}
+
+.page-wrapper,
 body {
+  background-size: cover; /* image is automatically scaled to cover the entire background area of the element, the ratio of the image is maintained, not distorted or stretched unnaturally */
+  min-height: 100vh; /*to ensure the bg takes the rest of the viewport height */
+}
+body #light {
   background: url(../Images/bg-light.png) no-repeat fixed; /* fixed to the viewport, bg will remain in place as the user scrolls the page */
+  background-size: cover; /* image is automatically scaled to cover the entire background area of the element, the ratio of the image is maintained, not distorted or stretched unnaturally */
+  min-height: 100vh; /*to ensure the bg takes the rest of the viewport height */
+}
+body #dark {
+  background: url(../Images/bg-dark.png) no-repeat fixed; /* fixed to the viewport, bg will remain in place as the user scrolls the page */
   background-size: cover; /* image is automatically scaled to cover the entire background area of the element, the ratio of the image is maintained, not distorted or stretched unnaturally */
   min-height: 100vh; /*to ensure the bg takes the rest of the viewport height */
 }
@@ -46,7 +64,6 @@ h6 {
 p {
   font-size: 12px;
   font-family: "Lato", sans-serif;
-  color: #727171;
 }
 
 /* Button */
@@ -58,6 +75,15 @@ p {
   height: 40px;
   padding: 5px;
 }
+#light .btn-round {
+  color: var(--lightgray-color);
+  background: var(--white-color);
+}
+#dark .btn-round {
+  color: var(--lightgray-color);
+  background: transparent;
+  border: 2px solid var(--lightgray-color);
+}
 .btn-square {
   display: inline-block;
   border: none;
@@ -65,6 +91,12 @@ p {
   width: 40px;
   height: 40px;
   padding: 5px;
+}
+#light .btn-square {
+  background: var(--lightPurple-color);
+}
+#dark .btn-square {
+  background: var(--darkPurple-color);
 }
 
 /* Search Box */
@@ -75,12 +107,18 @@ p {
 .search-box input[type="text"] {
   width: 100%;
   box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-  background: rgba(255, 255, 255, 0.2);
   padding: 10px;
   border: none;
   border-radius: 8px;
-  color: #000000;
   outline: none;
+}
+#light .search-box input[type="text"] {
+  background: rgba(255, 255, 255, 0.2);
+  color: #000000;
+}
+#dark .search-box input[type="text"] {
+  background: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
 }
 .search-box button {
   margin-left: 10px;
@@ -118,12 +156,18 @@ p {
   margin-top: 100px;
   width: 100%;
   box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-  background: rgba(255, 255, 255, 0.2);
   padding: 20px;
-  border: 1px solid white;
   border-radius: 25px;
   height: fit-content;
   position: relative;
+}
+#light .weather-container {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid white;
+}
+#dark .weather-container {
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
 }
 .imageSun {
   position: absolute;
@@ -141,6 +185,24 @@ p {
 .weather-top-sectionLeft {
   width: 45%;
 }
+#light .weather-top-sectionLeft h5 {
+  color: var(--darkPurple-color);
+}
+#dark .weather-top-sectionLeft h5 {
+  color: var(--white-color);
+}
+#light .groupColorText h5 {
+  color: var(--lightgray-color);
+}
+#dark .groupColorText h5 {
+  color: var(--white-color);
+}
+#light .weather-top-sectionLeft h1 {
+  color: var(--lightPurple-color);
+}
+#dark .weather-top-sectionLeft h1 {
+  color: var(--white-color);
+}
 .weather-top-sectionRight {
   width: 55%;
   text-align: right;
@@ -154,22 +216,33 @@ p {
   margin-top: 20px;
   width: 100%;
   box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-  background: rgba(255, 255, 255, 0.3);
   padding: 20px;
   border: none;
   border-radius: 25px;
   height: fit-content;
 }
+#light .weather-bottom-section-SearchHistory {
+  background: rgba(255, 255, 255, 0.3);
+}
+#dark .weather-bottom-section-SearchHistory {
+  background: rgba(0, 0, 0, 0.2);
+}
 .searchHistory-title {
   border: 0px solid rgb(1, 255, 18);
 }
+#light .searchHistory-title {
+  color: var(--darkPurple-color);
+}
+#dark .searchHistory-title {
+  color: var(--white-color);
+}
+
 .searchHistoryItem-container {
   height: auto;
   margin-top: 10px;
 }
 .searchHistoryItem {
   box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-  background: rgba(255, 255, 255, 0.4);
   padding: 10px;
   border: none;
   border-radius: 15px;
@@ -178,8 +251,22 @@ p {
   width: 100%;
   margin-bottom: 20px;
 }
+#light .searchHistoryItem {
+  background: rgba(255, 255, 255, 0.4);
+}
+#dark .searchHistoryItem {
+  background: rgba(0, 0, 0, 0.4);
+}
 .searchHistoryItem-left {
   width: 50%;
+}
+#light .searchHistoryItem-left h6,
+#light .searchHistoryItem-left p {
+  color: var(--darkPurple-color);
+}
+#dark .searchHistoryItem-left h6,
+#dark .searchHistoryItem-left p {
+  color: var(--white-color);
 }
 .searchHistoryItem-right {
   width: 50%;
@@ -190,6 +277,14 @@ p {
   padding-left: 10px;
   display: inline-block;
   justify-content: center;
+}
+
+/* theme button */
+.themeButton {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 20px;
 }
 
 /*------------------------------------------------------------------------
@@ -225,7 +320,6 @@ Responsive Media Quaries
 
   .searchHistoryItem {
     box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-    background: rgba(255, 255, 255, 0.4);
     padding: 10px;
     border: none;
     border-radius: 15px;
@@ -285,7 +379,6 @@ Responsive Media Quaries
 
   .searchHistoryItem {
     box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-    background: rgba(255, 255, 255, 0.4);
     padding: 10px;
     border: none;
     border-radius: 15px;
@@ -345,7 +438,6 @@ Responsive Media Quaries
 
   .searchHistoryItem {
     box-sizing: border-box; /*include the padding and border in an element's total width and height*/
-    background: rgba(255, 255, 255, 0.4);
     padding: 10px;
     border: none;
     border-radius: 15px;

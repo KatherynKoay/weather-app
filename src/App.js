@@ -1,14 +1,22 @@
-import { React, useState } from "react";
+import { React, createContext, useState } from "react";
 import { Button, Text } from "./Components/atom";
 import "./Styles/style.css";
 import { btn_square, txt_h1, txt_h5 } from "./Constants/VariantConstant";
 import { AiOutlineSearch } from "react-icons/ai";
-import theme from "./Styles/theme";
+import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
 import SunImg from "./Images/sun.png";
 import SearchHistoryItem from "./Components/molecule/SearchHistoryItem";
 import axios from "axios";
 
+export const ThemeContext = createContext(null);
+
 function App() {
+  const [theme, setTheme] = useState("light");
+  const toggleTheme = () => {
+    //use ternary conditional operator to toggle between dark and light theme
+    setTheme((current) => (current === "light" ? "dark" : "light"));
+  };
+
   const [data, setData] = useState({});
   const [city, setCity] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -36,7 +44,6 @@ function App() {
   // Get the current time
   const currentTime = formatTimeAMPM(new Date());
   //DateTime when searching
-
   const timestampOnSearch = currentDate + " " + currentTime;
 
   const handleSearchClick = () => {
@@ -86,113 +93,111 @@ function App() {
   ));
 
   return (
-    <div className="page-container">
-      {/* SearchBox */}
-      <div className="search-box">
-        <input
-          type="text"
-          placeholder="Please enter a city"
-          value={city}
-          onChange={(event) => setCity(event.target.value)}
-          autoFocus
-        />
-        <Button
-          variant={btn_square}
-          hasIcon
-          icon={<AiOutlineSearch color="white" size={25} />}
-          text=""
-          style={{
-            background: theme["lightTheme-primary-color"],
-          }}
-          onClick={() => handleSearchClick(city)}
-        />
-      </div>
-
-      {/* Error Message */}
-      {errorMsg && <span className="search-errorMsg">{errorMsg}</span>}
-
-      {/* WeatherContainer */}
-      <div className="weather-container">
-        <img className="imageSun" src={SunImg} alt="sun" />
-        <div className="weather-top-section-TodayWeather">
-          <div className="weather-top-sectionLeft">
-            <Text
-              variant={txt_h5}
-              text="Today's Weather"
-              style={{
-                color: theme["darkTheme-primary-color"],
-                fontWeight: 100,
-              }}
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div className="page-wrapper" id={theme}>
+        <div className="page-container">
+          {/* SearchBox */}
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Please enter a city"
+              value={city}
+              onChange={(event) => setCity(event.target.value)}
+              autoFocus
             />
-            <Text
-              variant={txt_h1}
-              text={Math.round(data?.main?.temp) + "°"}
-              style={{ color: theme["lightTheme-primary-color"] }}
-            />
-            <Text
-              variant={txt_h5}
-              text={
-                "H: " +
-                Math.round(data?.main?.temp_max) +
-                "° L: " +
-                Math.round(data?.main?.temp_min) +
-                "°"
-              }
-              style={{
-                color: theme["darkTheme-primary-color"],
-                fontWeight: 100,
-              }}
-            />
-            <Text
-              variant={txt_h5}
-              text={data?.name + ", " + data?.sys?.country}
-              style={{
-                color: theme["lightTheme-gray-color"],
-                fontWeight: 700,
-              }}
+            <Button
+              variant={btn_square}
+              hasIcon
+              icon={<AiOutlineSearch color="white" size={25} />}
+              text=""
+              onClick={() => handleSearchClick(city)}
             />
           </div>
-          <div className="weather-top-sectionRight">
-            <Text
-              variant={txt_h5}
-              text={data?.weather?.[0]?.main}
-              style={{
-                color: theme["lightTheme-gray-color"],
-              }}
-            />
-            <Text
-              variant={txt_h5}
-              text={"Humidity: " + data?.main?.humidity + "%"}
-              style={{
-                color: theme["lightTheme-gray-color"],
-              }}
-            />
-            <Text
-              variant={txt_h5}
-              text={timestampOnSearch}
-              style={{
-                color: theme["lightTheme-gray-color"],
-              }}
-            />
+
+          {/* Error Message */}
+          {errorMsg && <span className="search-errorMsg">{errorMsg}</span>}
+
+          {/* WeatherContainer */}
+          <div className="weather-container">
+            <img className="imageSun" src={SunImg} alt="sun" />
+            <div className="weather-top-section-TodayWeather">
+              <div className="weather-top-sectionLeft">
+                <Text
+                  variant={txt_h5}
+                  text="Today's Weather"
+                  style={{
+                    fontWeight: "bolder",
+                  }}
+                />
+                <Text
+                  variant={txt_h1}
+                  text={Math.round(data?.main?.temp) + "°"}
+                />
+                <Text
+                  variant={txt_h5}
+                  text={
+                    "H: " +
+                    Math.round(data?.main?.temp_max) +
+                    "° L: " +
+                    Math.round(data?.main?.temp_min) +
+                    "°"
+                  }
+                  style={{ fontWeight: 100 }}
+                />
+                <div className="groupColorText">
+                  <Text
+                    variant={txt_h5}
+                    text={data?.name + ", " + data?.sys?.country}
+                    style={{
+                      fontWeight: 700,
+                    }}
+                  />
+                </div>
+                <div className="weather-top-sectionRight groupColorText">
+                  <Text variant={txt_h5} text={data?.weather?.[0]?.main} />
+                  <Text
+                    variant={txt_h5}
+                    text={"Humidity: " + data?.main?.humidity + "%"}
+                  />
+                  <Text variant={txt_h5} text={timestampOnSearch} />
+                </div>
+              </div>
+            </div>
+
+            {/* Search History */}
+            <div className="weather-bottom-section-SearchHistory">
+              <div className="searchHistory-title">
+                <Text
+                  variant={txt_h5}
+                  text="Search History"
+                  style={{
+                    fontWeight: "regular",
+                  }}
+                />
+              </div>
+              <div className="searchHistoryItem-container">{historyItems}</div>
+            </div>
           </div>
         </div>
 
-        {/* Search History */}
-        <div className="weather-bottom-section-SearchHistory">
-          <div className="searchHistory-title">
-            <Text
-              variant={txt_h5}
-              text="Search History"
-              style={{
-                color: theme["darkTheme-primary-color"],
-                fontWeight: 100,
-              }}
-            />
-          </div>
-          <div className="searchHistoryItem-container">{historyItems}</div>
+        {/* ThemeButton */}
+        <div className="themeButton">
+          <Button
+            variant={btn_square}
+            hasIcon
+            icon={
+              theme === "light" ? (
+                <MdOutlineDarkMode color="white" size={25} />
+              ) : (
+                <MdOutlineLightMode color="white" size={25} />
+              )
+            }
+            text=""
+            onClick={toggleTheme}
+          />
         </div>
       </div>
-    </div>
+    </ThemeContext.Provider>
   );
 }
 

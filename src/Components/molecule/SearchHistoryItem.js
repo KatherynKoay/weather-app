@@ -3,7 +3,6 @@ import { Button, Text } from "../atom";
 import "../../Styles/style.css";
 import { btn_round, txt_h6, txt_p } from "../../Constants/VariantConstant";
 import { AiOutlineSearch, AiFillDelete } from "react-icons/ai";
-import theme from "../../Styles/theme";
 
 //location, timestamp, onRevisit, onRemove
 const SearchHistoryItem = React.forwardRef((props, ref) => {
@@ -14,7 +13,7 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
           variant={txt_h6}
           text={props.location}
           style={{
-            color: theme["darkTheme-primary-color"],
+            // color: theme["darkTheme-primary-color"],
             fontWeight: 100,
           }}
         />
@@ -22,7 +21,7 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
           variant={txt_p}
           text={props.timestamp}
           style={{
-            color: theme["darkTheme-primary-color"],
+            //color: theme["darkTheme-primary-color"],
             fontWeight: 100,
           }}
         />
@@ -34,14 +33,16 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
             hasIcon
             icon={
               <AiOutlineSearch
-                color={theme["lightTheme-gray-color"]}
+                //color={theme["lightTheme-gray-color"]}
                 size={25}
               />
             }
             text=""
-            style={{
-              background: "white",
-            }}
+            style={
+              {
+                // background: "white",
+              }
+            }
             onClick={props.onRevisit}
           />
         </div>
@@ -50,12 +51,17 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
             variant={btn_round}
             hasIcon
             icon={
-              <AiFillDelete color={theme["lightTheme-gray-color"]} size={25} />
+              <AiFillDelete
+                //color={theme["lightTheme-gray-color"]}
+                size={25}
+              />
             }
             text=""
-            style={{
-              background: "white",
-            }}
+            style={
+              {
+                // background: "white",
+              }
+            }
             onClick={props.onRemove}
           />
         </div>
