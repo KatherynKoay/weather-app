@@ -5,6 +5,7 @@ import { btn_round, txt_h6, txt_p } from "../../Constants/VariantConstant";
 import { AiOutlineSearch, AiFillDelete } from "react-icons/ai";
 import theme from "../../Styles/theme";
 
+//location, timestamp, onRevisit, onRemove
 const SearchHistoryItem = React.forwardRef((props, ref) => {
   return (
     <div className="searchHistoryItem">
@@ -55,7 +56,7 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
             style={{
               background: "white",
             }}
-            onClick={props.onDelete}
+            onClick={props.onRemove}
           />
         </div>
       </div>

@@ -47,10 +47,14 @@ function App() {
         .then((response) => {
           setData(response.data);
           setErrorMsg("");
-          setHistory((prevHistory) => [
-            ...prevHistory,
-            { city, data: response.data, timestampOnSearch },
-          ]);
+          // Check if the city already exists in the history, not existed only add to history
+          const cityExists = history.some((item) => item.city === city);
+          if (!cityExists) {
+            setHistory((prevHistory) => [
+              ...prevHistory,
+              { city, data: response.data, timestampOnSearch },
+            ]);
+          }
         })
         //add error message when search not found
         .catch((error) => {
@@ -61,21 +65,23 @@ function App() {
     }
   };
 
-  const handleHistoryClick = (city) => {
-    handleSearchClick(city);
+  const handleRevisitHistory = (city) => {
+    setCity(city); // Set the city in the search box
+    handleSearchClick(); // Trigger the search functionality
   };
 
-  const handleDeleteHistory = (city) => {
-    setHistory((prevHistory) => prevHistory.filter((item) => item !== city));
+  const handleRemoveHistory = (city) => {
+    const updatedHistory = history.filter((item) => item.city !== city);
+    setHistory(updatedHistory);
   };
 
   const historyItems = history.map((item, index) => (
     <SearchHistoryItem
       key={index}
       location={item.data?.name + ", " + item.data?.sys?.country}
-      timestamp={item.timestampOnSearch} // Use item.timestampOnSearch here
-      onRevisit={() => handleHistoryClick(item.city)}
-      onDelete={() => handleDeleteHistory(item.city)}
+      timestamp={item.timestampOnSearch}
+      onRevisit={() => handleRevisitHistory(item.city)} // Call handleRevisitHistory with the city parameter
+      onRemove={() => handleRemoveHistory(item.city)} // Call handleRemoveHistory with the city parameter
     />
   ));
 
@@ -88,6 +94,7 @@ function App() {
           placeholder="Please enter a city"
           value={city}
           onChange={(event) => setCity(event.target.value)}
+          autoFocus
         />
         <Button
           variant={btn_square}
