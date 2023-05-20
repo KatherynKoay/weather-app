@@ -16,13 +16,13 @@ function App() {
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=1fb2bc21dd9aaabaf07e1c4d4ad0901d`;
 
-  // Current Time
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth();
-  let date = today.getDate();
-  const currentDate = `${date}/${month}/${year}`;
   // Current Date
+  const today = new Date();
+  // Get the current date
+  const currentDate = `${today.getDate()}/${
+    today.getMonth() + 1 // getMonth() method of the Date object returns the zero-based index of the month. 0 is Jan, 1 is Feb etc... hence getMonth() +1
+  }/${today.getFullYear()}`;
+  // Current Time
   function formatTimeAMPM(date) {
     let hours = date.getHours();
     let minutes = date.getMinutes();
@@ -33,9 +33,11 @@ function App() {
     let strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   }
-  const currentTime = formatTimeAMPM(new Date()); // Get the current time when searching
+  // Get the current time
+  const currentTime = formatTimeAMPM(new Date());
+  //DateTime when searching
 
-  const timestampOnSearch = currentDate + " " + currentTime; //DateTime when searching
+  const timestampOnSearch = currentDate + " " + currentTime;
 
   const handleSearchClick = () => {
     //only executes when the searchbox is not empty
@@ -78,111 +80,109 @@ function App() {
   ));
 
   return (
-    <div className="page-wrapper">
-      <div className="page-container">
-        {/* SearchBox */}
-        <div className="search-box">
-          <input
-            type="text"
-            placeholder="Please enter a city"
-            value={city}
-            onChange={(event) => setCity(event.target.value)}
-          />
-          <Button
-            variant={btn_square}
-            hasIcon
-            icon={<AiOutlineSearch color="white" size={25} />}
-            text=""
-            style={{
-              background: theme["lightTheme-primary-color"],
-            }}
-            onClick={() => handleSearchClick(city)}
-          />
+    <div className="page-container">
+      {/* SearchBox */}
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Please enter a city"
+          value={city}
+          onChange={(event) => setCity(event.target.value)}
+        />
+        <Button
+          variant={btn_square}
+          hasIcon
+          icon={<AiOutlineSearch color="white" size={25} />}
+          text=""
+          style={{
+            background: theme["lightTheme-primary-color"],
+          }}
+          onClick={() => handleSearchClick(city)}
+        />
+      </div>
+
+      {/* Error Message */}
+      {errorMsg && <span className="search-errorMsg">{errorMsg}</span>}
+
+      {/* WeatherContainer */}
+      <div className="weather-container">
+        <img className="imageSun" src={SunImg} alt="sun" />
+        <div className="weather-top-section-TodayWeather">
+          <div className="weather-top-sectionLeft">
+            <Text
+              variant={txt_h5}
+              text="Today's Weather"
+              style={{
+                color: theme["darkTheme-primary-color"],
+                fontWeight: 100,
+              }}
+            />
+            <Text
+              variant={txt_h1}
+              text={Math.round(data?.main?.temp) + "°"}
+              style={{ color: theme["lightTheme-primary-color"] }}
+            />
+            <Text
+              variant={txt_h5}
+              text={
+                "H: " +
+                Math.round(data?.main?.temp_max) +
+                "° L: " +
+                Math.round(data?.main?.temp_min) +
+                "°"
+              }
+              style={{
+                color: theme["darkTheme-primary-color"],
+                fontWeight: 100,
+              }}
+            />
+            <Text
+              variant={txt_h5}
+              text={data?.name + ", " + data?.sys?.country}
+              style={{
+                color: theme["lightTheme-gray-color"],
+                fontWeight: 700,
+              }}
+            />
+          </div>
+          <div className="weather-top-sectionRight">
+            <Text
+              variant={txt_h5}
+              text={data?.weather?.[0]?.main}
+              style={{
+                color: theme["lightTheme-gray-color"],
+              }}
+            />
+            <Text
+              variant={txt_h5}
+              text={"Humidity: " + data?.main?.humidity + "%"}
+              style={{
+                color: theme["lightTheme-gray-color"],
+              }}
+            />
+            <Text
+              variant={txt_h5}
+              text={timestampOnSearch}
+              style={{
+                color: theme["lightTheme-gray-color"],
+              }}
+            />
+          </div>
         </div>
 
-        {/* Error Message */}
-        {errorMsg && <span className="search-errorMsg">{errorMsg}</span>}
-
-        {/* WeatherContainer */}
-        <div className="weather-container">
-          <img className="imageSun" src={SunImg} alt="sun" />
-          <div className="weather-top-section-TodayWeather">
-            <div className="weather-top-sectionLeft">
-              <Text
-                variant={txt_h5}
-                text="Today's Weather"
-                style={{
-                  color: theme["darkTheme-primary-color"],
-                  fontWeight: 100,
-                }}
-              />
-              <Text
-                variant={txt_h1}
-                text={Math.round(data?.main?.temp) + "°"}
-                style={{ color: theme["lightTheme-primary-color"] }}
-              />
-              <Text
-                variant={txt_h5}
-                text={
-                  "H: " +
-                  Math.round(data?.main?.temp_max) +
-                  "° L: " +
-                  Math.round(data?.main?.temp_min) +
-                  "°"
-                }
-                style={{
-                  color: theme["darkTheme-primary-color"],
-                  fontWeight: 100,
-                }}
-              />
-              <Text
-                variant={txt_h5}
-                text={data?.name + ", " + data?.sys?.country}
-                style={{
-                  color: theme["lightTheme-gray-color"],
-                  fontWeight: 700,
-                }}
-              />
-            </div>
-            <div className="weather-top-sectionRight">
-              <Text
-                variant={txt_h5}
-                text={data?.weather?.[0]?.main}
-                style={{
-                  color: theme["lightTheme-gray-color"],
-                }}
-              />
-              <Text
-                variant={txt_h5}
-                text={"Humidity: " + data?.main?.humidity + "%"}
-                style={{
-                  color: theme["lightTheme-gray-color"],
-                }}
-              />
-              <Text
-                variant={txt_h5}
-                text={timestampOnSearch}
-                style={{
-                  color: theme["lightTheme-gray-color"],
-                }}
-              />
-            </div>
+        {/* Search History */}
+        <div className="weather-bottom-section-SearchHistory">
+          <div className="searchHistory-title">
+            <Text
+              variant={txt_h5}
+              text="Search History"
+              style={{
+                color: theme["darkTheme-primary-color"],
+                fontWeight: 100,
+              }}
+            />
           </div>
-
-          {/* Search History */}
-          <div className="weather-bottom-section-SearchHistory">
-            <div className="searchHistory-title">
-              <Text
-                variant={txt_h5}
-                text="Search History"
-                style={{
-                  color: theme["darkTheme-primary-color"],
-                  fontWeight: 100,
-                }}
-              />
-            </div>
-            <div className="searchHistoryItem-container">{historyItems}</div>
-          </div>
+          <div className="searchHistoryItem-container">{historyItems}</div>
         </div>
       </div>
     </div>
