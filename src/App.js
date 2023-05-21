@@ -91,6 +91,7 @@ function App() {
     const previousSearch = history.find((item) => item.keyword === keyword);
     if (previousSearch) {
       setData(previousSearch.data);
+      setErrorMsg("");
       console.log("Details of previous data: ", previousSearch.data);
     }
   };
