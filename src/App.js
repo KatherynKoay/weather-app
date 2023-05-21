@@ -58,8 +58,8 @@ function App() {
           const cityExists = history.some((item) => item.city === city);
           if (!cityExists) {
             setHistory((prevHistory) => [
-              ...prevHistory,
-              { city, data: response.data, timestampOnSearch },
+              { city, data: response.data, timestampOnSearch }, //New search
+              ...prevHistory, // Add the previous history items after the new search, so that the most recent search is always on top
             ]);
           }
         })
@@ -74,7 +74,7 @@ function App() {
 
   const handleRevisitHistory = (city) => {
     setCity(city); // Set the city in the search box
-    handleSearchClick(); // Trigger the search functionality
+    handleSearchClick(city); // Trigger the search functionality
   };
 
   const handleRemoveHistory = (city) => {
