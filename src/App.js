@@ -110,7 +110,7 @@ function App() {
           <div className="search-box">
             <input
               type="text"
-              placeholder='Try searching "Singapore, SG"'
+              placeholder='You may try with "Singapore" or "Singapore, SG"'
               value={keyword}
               onChange={(event) => setKeyword(event.target.value)}
               autoFocus
