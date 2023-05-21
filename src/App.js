@@ -27,9 +27,9 @@ function App() {
   // Current Date
   const today = new Date();
   // Get the current date
-  const currentDate = `${today.getDate()}/${
+  const currentDate = `${today.getDate()}-${
     today.getMonth() + 1 // getMonth() method of the Date object returns the zero-based index of the month. 0 is Jan, 1 is Feb etc... hence getMonth() +1
-  }/${today.getFullYear()}`;
+  }-${today.getFullYear()}`;
   // Current Time
   function formatTimeAMPM(date) {
     let hours = date.getHours();

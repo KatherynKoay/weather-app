@@ -114,7 +114,7 @@ p {
 }
 #light .search-box input[type="text"] {
   background: rgba(255, 255, 255, 0.2);
-  color: #000000;
+  color: var(--darkPurple-color);
 }
 #dark .search-box input[type="text"] {
   background: rgba(0, 0, 0, 0.4);
@@ -264,9 +264,11 @@ p {
 #light .searchHistoryItem-left p {
   color: var(--darkPurple-color);
 }
-#dark .searchHistoryItem-left h6,
-#dark .searchHistoryItem-left p {
+#dark .searchHistoryItem-left h6 {
   color: var(--white-color);
+}
+#dark .searchHistoryItem-left p {
+  color: var(--lightgray-color);
 }
 .searchHistoryItem-right {
   width: 50%;
