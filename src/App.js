@@ -18,11 +18,15 @@ function App() {
   };
 
   const [data, setData] = useState({});
-  const [city, setCity] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [history, setHistory] = useState([]);
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=1fb2bc21dd9aaabaf07e1c4d4ad0901d`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${keyword}&units=metric&appid=1fb2bc21dd9aaabaf07e1c4d4ad0901d`;
+
+  // Search Sugesstion to improve the user friendliness
+  // get to know that the only access to a full list of location (city name, country) names OpenWeatherMap offer is a zipped JSON, there’s no api call, so I decided to make use of it
+  const searchSuggestionData = require("./SearchSugesstionData.json");
 
   // Current Date
   const today = new Date();
@@ -48,17 +52,17 @@ function App() {
 
   const handleSearchClick = () => {
     //only executes when the searchbox is not empty
-    if (city !== "") {
+    if (keyword !== "") {
       axios
         .get(url)
         .then((response) => {
           setData(response.data);
           setErrorMsg("");
-          // Check if the city already exists in the history, not existed only add to history
-          const cityExists = history.some((item) => item.city === city);
-          if (!cityExists) {
+          // Check if the keyword already exists in the history, not existed only add to history
+          const searchExists = history.some((item) => item.keyword === keyword);
+          if (!searchExists) {
             setHistory((prevHistory) => [
-              { city, data: response.data, timestampOnSearch }, //New search
+              { keyword, data: response.data, timestampOnSearch }, //New search
               ...prevHistory, // Add the previous history items after the new search, so that the most recent search is always on top
             ]);
           }
@@ -66,19 +70,19 @@ function App() {
         //add error message when search not found
         .catch((error) => {
           setData({});
-          setErrorMsg("City not found. Please try again.");
+          setErrorMsg("Not found. Please try again.");
         });
-      setCity("");
+      setKeyword("");
     }
   };
 
-  const handleRevisitHistory = (city) => {
-    setCity(city); // Set the city in the search box
-    handleSearchClick(city); // Trigger the search functionality
+  const handleRevisitHistory = (keyword) => {
+    setKeyword(keyword); // Set the keyword in the search box
+    handleSearchClick(keyword); // Trigger the search functionality
   };
 
-  const handleRemoveHistory = (city) => {
-    const updatedHistory = history.filter((item) => item.city !== city);
+  const handleRemoveHistory = (keyword) => {
+    const updatedHistory = history.filter((item) => item.keyword !== keyword);
     setHistory(updatedHistory);
   };
 
@@ -92,8 +96,8 @@ function App() {
           key={index}
           location={item.data?.name + ", " + item.data?.sys?.country}
           timestamp={item.timestampOnSearch}
-          onRevisit={() => handleRevisitHistory(item.city)} // Call handleRevisitHistory with the city parameter
-          onRemove={() => handleRemoveHistory(item.city)} // Call handleRemoveHistory with the city parameter
+          onRevisit={() => handleRevisitHistory(item.keyword)} // Call handleRevisitHistory with the keyword parameter
+          onRemove={() => handleRemoveHistory(item.keyword)} // Call handleRemoveHistory with the keyword parameter
         />
       ))
     );
@@ -106,9 +110,9 @@ function App() {
           <div className="search-box">
             <input
               type="text"
-              placeholder="Please enter a city"
-              value={city}
-              onChange={(event) => setCity(event.target.value)}
+              placeholder='Try searching "Singapore, SG"'
+              value={keyword}
+              onChange={(event) => setKeyword(event.target.value)}
               autoFocus
             />
             <Button
@@ -116,8 +120,38 @@ function App() {
               hasIcon
               icon={<AiOutlineSearch color="white" size={25} />}
               text=""
-              onClick={() => handleSearchClick(city)}
+              onClick={() => handleSearchClick(keyword)}
             />
+          </div>
+
+          {/* Search Sugesstion */}
+          <div className="search-dropdown">
+            {searchSuggestionData
+              .filter((item) => {
+                //make it lowercase for easier comparison
+                const searchTerm = keyword.toLowerCase();
+                const name = (item.name + ", " + item.country).toLowerCase();
+                return (
+                  //if searchTerm (keyword) in input
+                  searchTerm &&
+                  //and matches with name
+                  name.startsWith(searchTerm) &&
+                  //and if name exactly the same as searchTerm, also dont want it to show as "suggestion"
+                  name !== searchTerm
+                  //will return to show the suggestion list, else will be filtered
+                );
+              })
+              .slice(0, 5) //control the suggestion list to have maximum 5 listing (else it will get too long)
+              .map((item) => (
+                <div
+                  className="search-dropdown-row"
+                  //when click from the dropdown, add it to the input field
+                  onClick={() => setKeyword(item.name + ", " + item.country)} // <= API format for search city and country separates by comma: Johor, MY
+                  key={item.id}
+                >
+                  {item.name + ", " + item.country}
+                </div>
+              ))}
           </div>
 
           {/* Error Message */}

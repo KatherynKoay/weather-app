@@ -124,7 +124,6 @@ p {
   margin-left: 10px;
   cursor: pointer;
 }
-
 .search-errorMsg {
   color: rgb(254, 50, 117);
   font-weight: 500;
@@ -138,18 +137,30 @@ p {
     opacity: 0.5; /* set opacity to 0.5 at 50% */
   }
 }
-/* 
 .search-dropdown {
-  background: rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
   border: none;
-  padding-left: 10px; when dropdown does appear, give it some padding on the left, which the wording starting line aligns with the searchbox input
-  width: initial;
+  margin-top: 5px;
+  border-radius: 8px;
+  /* give it some padding on the left, which the wording starting line aligns with the searchbox input */
+  padding-left: 10px;
+}
+#light .search-dropdown {
+  background: rgba(255, 255, 255, 0.2);
+}
+#dark .search-dropdown {
+  background: rgba(0, 0, 0, 0.2);
 }
 .search-dropdown-row {
   cursor: pointer;
-} */
+}
+#light .search-dropdown-row {
+  color: var(--darkPurple-color);
+}
+#dark .search-dropdown-row {
+  color: var(--white-color);
+}
 
 /* Today's Weather */
 .weather-container {
