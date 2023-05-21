@@ -148,6 +148,30 @@ function App() {
                 );
               })
               .slice(0, 5) //control the suggestion list to have maximum 5 listing (else it will get too long)
+              //I noticed in the json file there is more than one object having the same name and country,
+              //in this accessment I wish to have a more clean SearchSuggestion experience,
+              //so I would like to always take the one with the smallest id
+              .reduce((findings, currentItem) => {
+                // Find the existing suggestion with the same name and country
+                const existingSuggestion = findings.find(
+                  (item) =>
+                    item.name === currentItem.name &&
+                    item.country === currentItem.country
+                );
+
+                if (existingSuggestion) {
+                  // If the existing suggestion has a larger id, replace it with the current suggestion
+                  if (currentItem.id < existingSuggestion.id) {
+                    const index = findings.indexOf(existingSuggestion);
+                    findings[index] = currentItem;
+                  }
+                } else {
+                  // Add the current suggestion if it doesn't exist in the findings (if only have one findings)
+                  findings.push(currentItem);
+                }
+
+                return findings;
+              }, [])
               .map((item) => (
                 <div
                   className="search-dropdown-row"
