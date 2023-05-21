@@ -7,6 +7,7 @@ import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
 import SunImg from "./Images/sun.png";
 import SearchHistoryItem from "./Components/molecule/SearchHistoryItem";
 import axios from "axios";
+import deepEqual from "deep-equal";
 
 export const ThemeContext = createContext(null);
 
@@ -59,12 +60,13 @@ function App() {
           setData(response.data);
           setErrorMsg("");
           // Check if the record already exists in the history, not existed only add to history
-          const searchExists = history.some(
-            (item) =>
-              // comparing the stringified versions of the data objects in the history array
-              // with the data object received from the API response
-              // if the stringified versions match, it indicates that the objects have the same contents.
-              JSON.stringify(item.data) === JSON.stringify(response.data)
+          // using deep-equal comparison check
+          const searchExists = history.some((item) =>
+            //JSON.stringify(item.data) === JSON.stringify(response.data)
+            //JSON.stringify comparison will still result duplicated record in SearchHistory, hence decided to use deep-equal for better comparison
+            //deep-equal is more effective than JSON.stringify as it considers the content and structure of the objects rather than just their stringified versions
+            //and deep-equal is more sensitive to symbols compared to lodash.isEqual (like the comma in "City,Country")
+            deepEqual(item.data, response.data)
           );
           if (!searchExists) {
             setHistory((prevHistory) => [
