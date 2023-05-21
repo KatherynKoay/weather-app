@@ -58,8 +58,14 @@ function App() {
         .then((response) => {
           setData(response.data);
           setErrorMsg("");
-          // Check if the keyword already exists in the history, not existed only add to history
-          const searchExists = history.some((item) => item.keyword === keyword);
+          // Check if the record already exists in the history, not existed only add to history
+          const searchExists = history.some(
+            (item) =>
+              // comparing the stringified versions of the data objects in the history array
+              // with the data object received from the API response
+              // if the stringified versions match, it indicates that the objects have the same contents.
+              JSON.stringify(item.data) === JSON.stringify(response.data)
+          );
           if (!searchExists) {
             setHistory((prevHistory) => [
               { keyword, data: response.data, timestampOnSearch }, //New search
