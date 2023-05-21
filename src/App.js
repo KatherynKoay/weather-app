@@ -82,15 +82,21 @@ function App() {
     setHistory(updatedHistory);
   };
 
-  const historyItems = history.map((item, index) => (
-    <SearchHistoryItem
-      key={index}
-      location={item.data?.name + ", " + item.data?.sys?.country}
-      timestamp={item.timestampOnSearch}
-      onRevisit={() => handleRevisitHistory(item.city)} // Call handleRevisitHistory with the city parameter
-      onRemove={() => handleRemoveHistory(item.city)} // Call handleRemoveHistory with the city parameter
-    />
-  ));
+  const historyItems =
+    // show No Records when there is no history
+    history.length === 0 ? (
+      <span className="searchHistoryItem-noRecord">No Record</span>
+    ) : (
+      history.map((item, index) => (
+        <SearchHistoryItem
+          key={index}
+          location={item.data?.name + ", " + item.data?.sys?.country}
+          timestamp={item.timestampOnSearch}
+          onRevisit={() => handleRevisitHistory(item.city)} // Call handleRevisitHistory with the city parameter
+          onRemove={() => handleRemoveHistory(item.city)} // Call handleRemoveHistory with the city parameter
+        />
+      ))
+    );
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

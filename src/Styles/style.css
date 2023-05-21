@@ -257,6 +257,17 @@ p {
 #dark .searchHistoryItem {
   background: rgba(0, 0, 0, 0.4);
 }
+.searchHistoryItem-noRecord {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+#light .searchHistoryItem-noRecord {
+  color: var(--lightgray-color);
+}
+#dark .searchHistoryItem-noRecord {
+  color: var(--lightgray-color);
+}
 .searchHistoryItem-left {
   width: 50%;
 }
