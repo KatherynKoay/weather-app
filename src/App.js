@@ -65,7 +65,8 @@ function App() {
             //JSON.stringify(item.data) === JSON.stringify(response.data)
             //JSON.stringify comparison will still result duplicated record in SearchHistory, hence decided to use deep-equal for better comparison
             //deep-equal is more effective than JSON.stringify as it considers the content and structure of the objects rather than just their stringified versions
-            //and deep-equal is more sensitive to symbols compared to lodash.isEqual (like the comma in "City,Country")
+            //and deep-equal is lightweight in package and more sensitive to symbols compared to lodash.isEqual (like "" , '')
+            //if the records seem to get duplicated again, it is because of some changes in the number indicators in the weather compared to previous searches (see console log of "Details of previous data" after clicking Revisit button)
             deepEqual(item.data, response.data)
           );
           if (!searchExists) {
@@ -74,6 +75,7 @@ function App() {
               ...prevHistory, // Add the previous history items after the new search, so that the most recent search is always on top
             ]);
           }
+          console.log("isIdentical:", searchExists); //false: into history list; true: not into history list
         })
         //add error message when search not found
         .catch((error) => {
@@ -84,9 +86,13 @@ function App() {
     }
   };
 
+  //click to revisit the previous history record
   const handleRevisitHistory = (keyword) => {
-    setKeyword(keyword); // Set the keyword in the search box
-    handleSearchClick(keyword); // Trigger the search functionality
+    const previousSearch = history.find((item) => item.keyword === keyword);
+    if (previousSearch) {
+      setData(previousSearch.data);
+      console.log("Details of previous data: ", previousSearch.data);
+    }
   };
 
   const handleRemoveHistory = (keyword) => {

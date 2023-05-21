@@ -40,6 +40,7 @@ const Button = React.forwardRef((props, ref) => {
       onClick={props.onClick}
       disabled={props.disabled}
       style={props.style}
+      title={props.title}
     >
       {IconPosition(props)}
     </button>

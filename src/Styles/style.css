@@ -4,6 +4,7 @@
   --lightPurple-color: #6c40b5;
   --lightgray-color: #8c8c8c;
   --white-color: #ffffff;
+  --red-color: #fe3275;
 }
 
 .page-wrapper,
@@ -118,14 +119,14 @@ p {
 }
 #dark .search-box input[type="text"] {
   background: rgba(0, 0, 0, 0.4);
-  color: #ffffff;
+  color: var(--white-color);
 }
 .search-box button {
   margin-left: 10px;
   cursor: pointer;
 }
 .search-errorMsg {
-  color: rgb(254, 50, 117);
+  color: var(--red-color);
   font-weight: 500;
   /* decide to add blinker to draw user's attention to the error message */
   animation: blinker 1.5s linear infinite;
@@ -150,7 +151,7 @@ p {
   background: rgba(255, 255, 255, 0.2);
 }
 #dark .search-dropdown {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.4);
 }
 .search-dropdown-row {
   cursor: pointer;

@@ -13,7 +13,6 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
           variant={txt_h6}
           text={props.location}
           style={{
-            // color: theme["darkTheme-primary-color"],
             fontWeight: 100,
           }}
         />
@@ -21,7 +20,6 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
           variant={txt_p}
           text={props.timestamp}
           style={{
-            //color: theme["darkTheme-primary-color"],
             fontWeight: 100,
           }}
         />
@@ -31,38 +29,20 @@ const SearchHistoryItem = React.forwardRef((props, ref) => {
           <Button
             variant={btn_round}
             hasIcon
-            icon={
-              <AiOutlineSearch
-                //color={theme["lightTheme-gray-color"]}
-                size={25}
-              />
-            }
+            icon={<AiOutlineSearch size={25} />}
             text=""
-            style={
-              {
-                // background: "white",
-              }
-            }
             onClick={props.onRevisit}
+            title="Revisit"
           />
         </div>
         <div className="searchHistoryItem-right-button">
           <Button
             variant={btn_round}
             hasIcon
-            icon={
-              <AiFillDelete
-                //color={theme["lightTheme-gray-color"]}
-                size={25}
-              />
-            }
+            icon={<AiFillDelete size={25} />}
             text=""
-            style={
-              {
-                // background: "white",
-              }
-            }
             onClick={props.onRemove}
+            title="Remove"
           />
         </div>
       </div>
